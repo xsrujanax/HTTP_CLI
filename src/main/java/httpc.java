@@ -1,36 +1,6 @@
-////import joptsimple.OptionParser;
-////import joptsimple.OptionSet;
-////
-////import static java.util.Arrays.asList;
-////
-////public class httpc {
-////    public static void runClient()
-////    {
-////        System.out.println("Hi");
-////    }
-////
-////    public static void main(String[] args){
-////        OptionParser parser = new OptionParser();
-////        parser.acceptsAll(asList("host", "h"),"Hostname")
-////                .withOptionalArg()
-////                .defaultsTo("localhost");
-////
-////        parser.acceptsAll(asList("port", "p"), "port number")
-////                .withOptionalArg()
-////                .defaultsTo("80");
-////
-////        OptionSet opts = parser.parse(args);
-////
-////        String host = (String) opts.valueOf("host");
-////        int port = Integer.parseInt((String)opts.valueOf("port"));
-////        System.out.println(host);
-////        System.out.println(port);
-////        runClient();
-////    }
-////}
-
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.util.Arrays;
 
 public class httpc {
 
@@ -69,7 +39,7 @@ public class httpc {
                 case "-h":
                     i++;
                     if (i < args.length) {
-                        headers += args[i] + "\r\n";
+                        headers += args[i];
                     }
                     break;
                 default:
@@ -77,7 +47,6 @@ public class httpc {
                     break;
             }
         }
-
         if (method.equals("get") && (inlineData != null || fileData != null)) {
             System.out.println("GET request should not have -d or -f options.");
             return;
@@ -119,3 +88,4 @@ public class httpc {
         }
     }
 }
+

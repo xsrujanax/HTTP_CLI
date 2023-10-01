@@ -146,7 +146,6 @@ public class HttpClient {
     public static void httpPOST(String URL, String parameters, String headers, int port, boolean verbose) throws IOException, URISyntaxException {
         URI uri = new URI(URL);
         String host = uri.getHost();
-        System.out.println(host);
         String path = uri.getRawPath();
         Socket socket = new Socket(host, port);
         PrintWriter out = new PrintWriter(socket.getOutputStream());
@@ -155,10 +154,10 @@ public class HttpClient {
         out.println(String.format("POST %s HTTP/1.0", path));
         out.println("Host: " + host);
         out.println(headers);
-        out.println("Content-Length: " + parameters.toString().length());
+        out.println("Content-Length: " + parameters.length());
         out.println("User-agent: " + "Concordia-HTTP/1.0");
-        out.println("");
-        out.println(parameters.toString());
+        out.println();
+        out.println(parameters);
         out.flush();
 
         BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
