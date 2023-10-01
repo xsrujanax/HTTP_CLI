@@ -96,8 +96,7 @@ import java.net.*;
 import java.nio.charset.StandardCharsets;
 
 public class HttpClient {
-
-    public static void httpGET(String url, int port, boolean verbose) throws IOException, URISyntaxException {
+    public static String httpGET(String url, int port, boolean verbose) throws IOException, URISyntaxException {
 
         URI uri = new URI(url);
         String host = uri.getHost();
@@ -115,21 +114,14 @@ public class HttpClient {
         out.flush();
 
         BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-
         String responseLine = in.readLine();
-        if (verbose) {
-            System.out.println(responseLine);
-        }
         String line;
+        StringBuilder responseHeaders = new StringBuilder(responseLine).append("\n");
 
-        //read the response headers
         while (!(line = in.readLine()).isEmpty()) {
-            if (verbose) {
-                System.out.println(line);
-            }
+            responseHeaders.append(line).append("\n");
         }
 
-        // Read the response body from the server, if any
         StringBuilder responseBody = new StringBuilder();
         while ((line = in.readLine()) != null) {
             responseBody.append(line).append("\n");
@@ -139,11 +131,14 @@ public class HttpClient {
         out.close();
         socket.close();
 
-        // Print the response body
-        System.out.println(responseBody.toString());
+        if (verbose) {
+            return responseHeaders.append(responseBody).toString();
+        } else {
+            return responseBody.toString();
+        }
     }
 
-    public static void httpPOST(String URL, String parameters, String headers, int port, boolean verbose) throws IOException, URISyntaxException {
+    public static String httpPOST(String URL, String parameters, String headers, int port, boolean verbose) throws IOException, URISyntaxException {
         URI uri = new URI(URL);
         String host = uri.getHost();
         String path = uri.getRawPath();
@@ -163,19 +158,13 @@ public class HttpClient {
         BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 
         String responseLine = in.readLine();
-        if (verbose) {
-            System.out.println(responseLine);
-        }
         String line;
+        StringBuilder responseHeaders = new StringBuilder(responseLine).append("\n");
 
-        // Read the response headers
         while (!(line = in.readLine()).isEmpty()) {
-            if (verbose) {
-                System.out.println(line);
-            }
+            responseHeaders.append(line).append("\n");
         }
 
-        // Read the response body
         StringBuilder responseBody = new StringBuilder();
         while ((line = in.readLine()) != null) {
             responseBody.append(line).append("\n");
@@ -185,31 +174,10 @@ public class HttpClient {
         out.close();
         socket.close();
 
-        // Print the response body
-        System.out.println(responseBody.toString());
-    }
-
-    public static void main(String[] args) throws IOException, URISyntaxException {
-        String url = "http://httpbin.org/get?course=networking&assignment=1";
-        int port = 80;
-        boolean verbose = false;
-
-        // Check if verbose flag (-v) is provided
-        for (String arg : args) {
-            if (arg.equals("-v")) {
-                verbose = true;
-                break;
-            }
+        if (verbose) {
+            return responseHeaders.append(responseBody).toString();
+        } else {
+            return responseBody.toString();
         }
-
-        // Send the GET request with or without verbose output
-        httpGET(url, port, verbose);
-
-        String postUrl = "http://httpbin.org/post";
-        String postParameters = "{\"Assignment\": 1,\"Course\": \"networking\"}";
-        String postHeaders = "Content-Type: application/json";
-
-        // Send the POST request with or without verbose output
-        httpPOST(postUrl, postParameters, postHeaders, port, verbose);
     }
 }
