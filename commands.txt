@@ -7,4 +7,6 @@ httpc get -v 'http://httpbin.org/get?course=networking&assignment=1'
 httpc get -v 'http://httpbin.org/get?course=networking&assignment=1' -o outget.txt
 httpc get -h Content-Type:application/json 'http://httpbin.org/get?course=networking&assignment=1'
 httpc get -h Content-Type:application/json -h Accept:application/json 'http://httpbin.org/get?course=networking&assignment=1'
+httpc post -v -h Content-Type:application/json -d '{"Assignment": 1, "Course":445}' http://httpbin.org/post -o outpost_v.txt
+httpc post -v -h Content-Type:application/json -f abc.txt http://httpbin.org/post -o outpost_file.txt
 

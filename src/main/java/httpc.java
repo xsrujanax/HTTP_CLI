@@ -6,7 +6,7 @@ import java.net.URISyntaxException;
  */
 public class httpc {
     public static String readFile(String fileName) throws IOException {
-        File file = new File(fileName);
+        File file = new File("C:\\Users\\Sruja\\GIT\\HTTP_CLI\\src\\main\\java\\"+fileName);
         StringBuilder str = new StringBuilder();
         BufferedReader br = new BufferedReader(new FileReader(file));
         String lines = null;
@@ -21,7 +21,7 @@ public class httpc {
 
     public static void writeToFile(String fileName , String output) throws IOException {
         File file = new File(fileName);
-        BufferedWriter bw = new BufferedWriter( new FileWriter(file));
+        BufferedWriter bw = new BufferedWriter( new FileWriter("C:\\Users\\Sruja\\GIT\\HTTP_CLI\\"+file));
         bw.flush();
         bw.write(output);
         bw.close();

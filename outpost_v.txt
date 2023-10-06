@@ -1,3 +1,11 @@
+HTTP/1.1 200 OK
+Date: Fri, 06 Oct 2023 15:41:22 GMT
+Content-Type: application/json
+Content-Length: 447
+Connection: close
+Server: gunicorn/19.9.0
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Credentials: true
 {
   "args": {}, 
   "data": "{\"Assignment\":1,\"Course\":445}", 
@@ -8,12 +16,12 @@
     "Content-Type": "application/json", 
     "Host": "httpbin.org", 
     "User-Agent": "Concordia-HTTP/1.0", 
-    "X-Amzn-Trace-Id": "Root=1-651fa8dc-4cd15d5f7f5b4c0d1a306e03"
+    "X-Amzn-Trace-Id": "Root=1-65202aa2-7526d99634eb702761d2ab6a"
   }, 
   "json": {
     "Assignment": 1, 
     "Course": 445
   }, 
-  "origin": "184.145.178.119", 
+  "origin": "24.114.94.112", 
   "url": "http://httpbin.org/post"
 }
