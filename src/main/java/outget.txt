@@ -1,0 +1,13 @@
+{
+  "args": {
+    "assignment": "1", 
+    "course": "networking"
+  }, 
+  "headers": {
+    "Host": "httpbin.org", 
+    "User-Agent": "Concordia-HTTP/1.0", 
+    "X-Amzn-Trace-Id": "Root=1-651fa842-25d29c1d64909a4b7bf35fc7"
+  }, 
+  "origin": "184.145.178.119", 
+  "url": "http://httpbin.org/get?course=networking&assignment=1"
+}

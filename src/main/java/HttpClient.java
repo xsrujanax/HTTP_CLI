@@ -50,17 +50,19 @@ public class HttpClient {
         }
     }
 
-    public static String httpPOST(String URL, String parameters, String headers, int port, boolean verbose) throws IOException, URISyntaxException {
+    public static String httpPOST(String URL, String parameters, String requestHeaders, int port, boolean verbose) throws IOException, URISyntaxException {
         URI uri = new URI(URL);
         String host = uri.getHost();
         String path = uri.getRawPath();
         Socket socket = new Socket(host, port);
         PrintWriter out = new PrintWriter(socket.getOutputStream());
-
+        String[] headers = requestHeaders.split(",");
         //request line
         out.println(String.format("POST %s HTTP/1.0", path));
         out.println("Host: " + host);
-        out.println(headers);
+        for(String header : headers){
+            out.println(header);
+        }
         out.println("Content-Length: " + parameters.length());
         out.println("User-agent: " + "Concordia-HTTP/1.0");
         out.println();

@@ -99,8 +99,7 @@ public class httpc {
                 case "-h":
                     i++;
                     if (i < args.length) {
-
-                        headers.append(args[i]);
+                        headers.append(args[i]).append(",");
                     }
                     break;
                 case "-o":
@@ -133,7 +132,7 @@ public class httpc {
         try {
             HttpClient httpClient;
             if (method.equals("get")) {
-                output = HttpClient.httpGET(url, 80, verbose);
+                output = HttpClient.httpGET(url, 80, verbose, headers.toString());
             } else if (method.equals("post")) {
                 output = HttpClient.httpPOST(url, (inlineData != null ? inlineData : fileData), headers.toString(), 80, verbose);
             }
