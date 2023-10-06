@@ -3,20 +3,25 @@ import java.net.*;
 import java.nio.charset.StandardCharsets;
 
 public class HttpClient {
-    public static String httpGET(String url, int port, boolean verbose) throws IOException, URISyntaxException {
+    public static String httpGET(String url, int port, boolean verbose, String requestHeaders) throws IOException, URISyntaxException {
 
         URI uri = new URI(url);
         String host = uri.getHost();
         String path = uri.getRawPath();
         String queryParameters = uri.getRawQuery();
         Socket socket = new Socket(host, port);
+        String[] headers = requestHeaders.split(",");
 
         //request line
         PrintWriter out = new PrintWriter(socket.getOutputStream());
         out.println(String.format("GET %s?%s HTTP/1.0", path, queryParameters));
         out.println("Host:" + host);
         out.println("User-Agent:" + "Concordia-HTTP/1.0");
-        out.println("Accept:" + "application/json");
+        for(String header : headers){
+            out.println(header);
+        }
+
+        //out.println("Accept:" + "application/json");
         out.println("");
         out.flush();
 
