@@ -10,9 +10,10 @@ public class httpc {
         StringBuilder str = new StringBuilder();
         BufferedReader br = new BufferedReader(new FileReader(file));
         String lines = null;
+        str.append(lines = br.readLine());
         while((lines = br.readLine())!= null)
         {
-            str.append(lines).append("\n");
+            str.append("\n").append(lines);
         }
         br.close();
         return str.toString();
@@ -25,6 +26,29 @@ public class httpc {
         bw.write(output);
         bw.close();
         System.out.println("Response has been saved to file:" + fileName);
+    }
+
+    public static String processInlineData(String data) {
+        String[] keyValuePairs = data.replaceAll("[{}]", "").split(",");
+        StringBuilder jsonBuilder = new StringBuilder("{");
+
+        for (String keyValue : keyValuePairs) {
+            String[] parts = keyValue.trim().split(":");
+            if (parts.length == 2) {
+                String key = parts[0].trim();
+                String value = parts[1].trim();
+                jsonBuilder.append("\"").append(key).append("\":").append(value).append(",");
+            }
+        }
+
+        if (jsonBuilder.charAt(jsonBuilder.length() - 1) == ',') {
+            jsonBuilder.setCharAt(jsonBuilder.length() - 1, '}');
+        } else {
+            jsonBuilder.append("}");
+        }
+
+        String jsonString = jsonBuilder.toString();
+        return jsonString;
     }
 
     public static void main(String[] args) throws IOException {
@@ -63,7 +87,7 @@ public class httpc {
                 case "-d":
                     i++;
                     if (i < args.length) {
-                        inlineData = args[i];
+                        inlineData =processInlineData(args[i]);
                     }
                     break;
                 case "-f":
@@ -75,6 +99,7 @@ public class httpc {
                 case "-h":
                     i++;
                     if (i < args.length) {
+
                         headers.append(args[i]);
                     }
                     break;
